@@ -21,7 +21,7 @@ class Spaceship(Sprite):
 
     def move_right(self):
         self.rect.x += 10
-        if self.rect.right > SCREEN_WIDTH:
+        if self.rect.right >= SCREEN_WIDTH - 60:
             self.rect.x = 0
     
     def move_up(self):
@@ -32,7 +32,6 @@ class Spaceship(Sprite):
         if self.rect.y < SCREEN_HEIGHT - 70:
             self.rect.y += 10
 
-            
     def update(self, user_input):
         if user_input[pg.K_LEFT]:
             self.move_left()
@@ -42,7 +41,6 @@ class Spaceship(Sprite):
             self.move_up()
         elif user_input[pg.K_DOWN]:
             self.move_down()
-
     
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
