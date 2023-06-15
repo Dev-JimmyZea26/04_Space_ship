@@ -29,8 +29,8 @@ class BulletManager:
             bullet.draw(screen)
             
     def add_bullet(self, bullet):
-        if bullet.owner == 'enemy' and len(self.enemy_bullets) < 1:
+        if bullet.owner == 'enemy':
             self.enemy_bullets.append(bullet)
-        elif bullet.owner == 'player' and len(self.bullets) < 1:
+        elif bullet.owner == 'player':
             self.bullets.append(bullet)
         

@@ -16,6 +16,8 @@ class Enemy(Sprite):
         3: ENEMY_3,
         4: ENEMY_4
     }
+    ENEMY_SHOOT_DELAY = 1000 # Determinar si ha pasado suficiente tiempo desde el último disparo.
+    
     
     def __init__(self, image = 1, speed_x=SPEED_X, speed_y=SPEED_Y, mov_x_for=[30, 100]):
         self.image = self.IMAGE[image]
@@ -30,6 +32,7 @@ class Enemy(Sprite):
         self.move_x_for = random.randint(mov_x_for[0], mov_x_for[1])
         self.index = 0
         self.shooting_time = random.randint(30, 50)
+        self.last_shot_time = 0
     
     # Events
     def change_movement_x(self):
@@ -54,13 +57,12 @@ class Enemy(Sprite):
             
         if self.rect.y >= SCREEN_HEIGHT:
             ships.remove(self)
-            
+
     def shoot(self, bullet_manager):
         current_time = pg.time.get_ticks()
-        if self.shooting_time <= current_time:
+        if current_time - self.last_shot_time >= self.ENEMY_SHOOT_DELAY:
             bullet_manager.add_bullet(Bullet(self))
-            self.shooting_time += random.randint(20, 50)
-        
+            self.last_shot_time = current_time
                 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
