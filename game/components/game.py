@@ -22,6 +22,7 @@ class Game:
         self.running = False
         self.score = 0
         self.death_count = 0
+        self.highest_score = 0
         self.menu = Menu('Press any key to start...', self.screen)
         
     def execute(self):
@@ -35,7 +36,6 @@ class Game:
     def run(self):
         self.enemy_manager.reset()
         self.score = 0
-        self.death_count = 0
         self.playing = True
         while self.playing:
             self.events()
@@ -85,8 +85,10 @@ class Game:
         if self.death_count == 0:
             self.menu.draw(self.screen)
         else:
-            self.menu.update_message(f'Game Over. Your score: {self.score}')
-            self.menu.draw(self.screen)
+            self.highest_score = self.score if self.score > self.highest_score else self.highest_score
+            message = f'Game Over. Press any key to restart.\n\nYour score: {self.score}\nHighest score: {self.highest_score}\nTotal deaths: {self.death_count}'
+            self.menu.update_message(message, self.screen)
+
         icon = pg.transform.scale(ICON, (100, 100))
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
         self.menu.update(self)
