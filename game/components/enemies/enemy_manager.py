@@ -20,9 +20,12 @@ class EnemyManager:
             mov_x_for = [50 + (enemy_type - 2) * 50, 100 + (enemy_type - 2) * 100]
             enemy = Enemy(enemy_type, speed_x, speed_y, mov_x_for)
             
-        if len(self.enemies) < 3:
+        if len(self.enemies) < 2:
             self.enemies.append(enemy)
 
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)
+    
+    def reset(self):
+        self.enemies = []
