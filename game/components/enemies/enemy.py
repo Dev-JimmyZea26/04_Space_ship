@@ -19,7 +19,7 @@ class Enemy(Sprite):
     ENEMY_SHOOT_DELAY = 1000 # Determinar si ha pasado suficiente tiempo desde el último disparo.
     
     
-    def __init__(self, image = 1, speed_x=SPEED_X, speed_y=SPEED_Y, mov_x_for=[30, 100]):
+    def __init__(self, image = 1, speed_x=SPEED_X, speed_y=SPEED_Y, mov_x_for=[30, 100], speed_bullet=20, enemy_type=1):
         self.image = self.IMAGE[image]
         self.image = pg.transform.scale(self.image, (40, 60))
         self.rect = self.image.get_rect()
@@ -33,6 +33,7 @@ class Enemy(Sprite):
         self.index = 0
         self.shooting_time = random.randint(30, 50)
         self.last_shot_time = 0
+        self.speed_bullet = speed_bullet
     
     # Events
     def change_movement_x(self):

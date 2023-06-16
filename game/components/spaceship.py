@@ -14,6 +14,7 @@ class Spaceship(Sprite):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.type = 'player'
+        self.speed_bullet = 35
         
     # Events   
     def move_left(self):
