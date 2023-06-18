@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SPACESHIP_SHIELD, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import SPACESHIP, SPACESHIP_SHIELD, SCREEN_WIDTH, SCREEN_HEIGHT, DEFAULT_TYPE
 from game.components.bullets.bullet import Bullet
 
 class Spaceship(Sprite):
@@ -53,3 +53,7 @@ class Spaceship(Sprite):
     
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
+        
+    def reset(self):
+        self.rect.x = self.X_POS
+        self.rect.y = self.Y_POS

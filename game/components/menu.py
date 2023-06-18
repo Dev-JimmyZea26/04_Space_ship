@@ -5,12 +5,9 @@ class Menu:
     HALFT_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
     HALFT_SCREEN_WIDTH = SCREEN_WIDTH // 2
     
-    def __init__(self, message, screen):
+    def __init__(self, screen):
         screen.fill((255, 255, 255))
         self.font = pg.font.Font(FONT_STYLE, 30)
-        self.text = self.font.render(message, True, (0, 0, 0))
-        self.text_rect = self.text.get_rect()
-        self.text_rect.center = (self.HALFT_SCREEN_WIDTH, self.HALFT_SCREEN_HEIGHT)
         
     def handle_events_on_menu(self, game):
         for event in pg.event.get():
@@ -27,15 +24,11 @@ class Menu:
         pg.display.update() # actualizar componentes de la pantalla
         self.handle_events_on_menu(game)
     
-    def draw(self, screen):
-        screen.blit(self.text, self.text_rect)
-        
-    def update_message(self, message, screen):
-        for index, line in enumerate(message.split('\n')):
-            text = self.font.render(line, True, (0, 0, 0))
-            text_rect = text.get_rect()
-            text_rect.center = (self.HALFT_SCREEN_WIDTH, self.HALFT_SCREEN_HEIGHT + (index * 30))
-            screen.blit(text, text_rect)
+    def draw(self, screen, message, x = HALFT_SCREEN_WIDTH, y = HALFT_SCREEN_HEIGHT, color = (0, 0, 0)):
+        text = self.font.render(message, True, color)
+        text_rect = text.get_rect()
+        text_rect.center = (x, y)
+        screen.blit(text, text_rect)
         
     def reset_screen_color(self, screen):
         screen.fill((255, 255, 255))

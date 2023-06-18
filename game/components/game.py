@@ -3,6 +3,7 @@ from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, F
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
+from game.components.counter import Counter
 from game.components.menu import Menu
 
 class Game:
@@ -19,11 +20,11 @@ class Game:
         self.player = Spaceship()
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
+        self.score = Counter()
+        self.death_count = Counter()
+        self.highest_score = Counter()
         self.running = False
-        self.score = 0
-        self.death_count = 0
-        self.highest_score = 0
-        self.menu = Menu('Press any key to start...', self.screen)
+        self.menu = Menu(self.screen)
         
     def execute(self):
         self.running = True
@@ -34,13 +35,18 @@ class Game:
         pg.quit()
         
     def run(self):
-        self.enemy_manager.reset()
-        self.score = 0
+        self.reset()
         self.playing = True
         while self.playing:
             self.events()
             self.update()
             self.draw()
+        
+    def reset(self):
+        self.enemy_manager.reset()
+        self.score.reset()
+        self.player.reset()
+        self.bullet_manager.reset()
         
     # Events
     def events(self):
@@ -63,7 +69,7 @@ class Game:
         self.player.draw(self.screen)
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
-        self.draw_score()
+        self.score.draw(self.screen)
         pg.display.update()
         pg.display.flip()
         
@@ -82,23 +88,18 @@ class Game:
         self.menu.reset_screen_color(self.screen)
         half_screen_height = SCREEN_HEIGHT // 2
         half_screen_width = SCREEN_WIDTH // 2
-        if self.death_count == 0:
-            self.menu.draw(self.screen)
+        if self.death_count.count == 0:
+            self.menu.draw(self.screen, 'Press any key to start...')
         else:
-            self.highest_score = self.score if self.score > self.highest_score else self.highest_score
-            message = f'Game Over. Press any key to restart.\n\nYour score: {self.score}\nHighest score: {self.highest_score}\nTotal deaths: {self.death_count}'
-            self.menu.update_message(message, self.screen)
+            self.update_highes_score()
+            self.menu.draw(self.screen, f'Game Over. Press any key to restart.')
+            self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 350)
+            self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 400)
+            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 450)
 
         icon = pg.transform.scale(ICON, (100, 100))
         self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
         self.menu.update(self)
         
-    def update_score(self):
-        self.score += 1
-        
-    def draw_score(self):
-        font = pg.font.Font(FONT_STYLE, 30)
-        text = font.render(f'Score: {self.score}', True, (255, 255, 255))
-        text_rect = text.get_rect()
-        text_rect.center = (1000, 50)
-        self.screen.blit(text, text_rect)
+    def update_highes_score(self):
+        self.highest_score.set_count(self.score.count if self.score.count > self.highest_score.count else self.highest_score.count)
