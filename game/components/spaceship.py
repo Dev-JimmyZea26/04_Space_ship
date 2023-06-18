@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame.sprite import Sprite
-from game.utils.constants import SPACESHIP, SPACESHIP_SHIELD, SCREEN_WIDTH, SCREEN_HEIGHT, DEFAULT_TYPE
+from game.utils.constants import SPACESHIP, SCREEN_WIDTH, SCREEN_HEIGHT, DEFAULT_TYPE
 from game.components.bullets.bullet import Bullet
 
 class Spaceship(Sprite):
@@ -15,6 +15,9 @@ class Spaceship(Sprite):
         self.rect.y = self.Y_POS
         self.type = 'player'
         self.speed_bullet = 35
+        self.has_power_up = False
+        self.power_up_time = 0
+        self.power_up_type = DEFAULT_TYPE
         
     # Events   
     def move_left(self):
@@ -57,3 +60,7 @@ class Spaceship(Sprite):
     def reset(self):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
+        
+    def set_image(self, size=(40, 60), image=SPACESHIP):
+        self.image = image
+        self.image = pg.transform.scale(self.image, size)

@@ -5,6 +5,7 @@ from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.counter import Counter
 from game.components.menu import Menu
+from game.components.power_ups.power_up_manager import PowerUpManager
 
 class Game:
     def __init__(self):
@@ -25,6 +26,7 @@ class Game:
         self.highest_score = Counter()
         self.running = False
         self.menu = Menu(self.screen)
+        self.power_up_manager = PowerUpManager()
         
     def execute(self):
         self.running = True
@@ -47,6 +49,7 @@ class Game:
         self.score.reset()
         self.player.reset()
         self.bullet_manager.reset()
+        self.power_up_manager.reset()
         
     # Events
     def events(self):
@@ -60,6 +63,7 @@ class Game:
         self.player.update(user_input, self)
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)
+        self.power_up_manager.update(self)
     
     # Draw
     def draw(self):
@@ -70,8 +74,21 @@ class Game:
         self.enemy_manager.draw(self.screen)
         self.bullet_manager.draw(self.screen)
         self.score.draw(self.screen)
+        self.power_up_manager.draw(self.screen)
+        self.draw_power_up_time()
         pg.display.update()
         pg.display.flip()
+    
+    def draw_power_up_time(self):
+        self.player.has_power_up = True
+        if self.player.has_power_up:
+            time_to_show = round((self.player.power_up_time - pg.time.get_ticks()) / 1000, 2)
+            if time_to_show >= 0:
+                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for: {time_to_show} in seconds', 500, 50, (255, 0, 0))
+            else:
+                self.player.has_power_up = False
+                self.player.power_up_type = DEFAULT_TYPE
+                self.player.set_image()
         
     def draw_background(self):
         image = pg.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
