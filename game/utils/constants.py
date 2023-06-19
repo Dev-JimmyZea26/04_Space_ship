@@ -42,6 +42,8 @@ EXPLOSION_SOUND = mixer.Sound(os.path.join(IMG_DIR, 'Sounds/explosion.wav'))
 SHOOT_SOUND = mixer.Sound(os.path.join(IMG_DIR, 'Sounds/shoot.wav'))
 SHOOT_SOUND_ENEMY = mixer.Sound(os.path.join(IMG_DIR, 'Sounds/shoot_enemy.wav'))
 LOBBY_SOUND = mixer.Sound(os.path.join(IMG_DIR, 'Sounds/lobby.wav'))
+GAME_OVER_SOUND = mixer.Sound(os.path.join(IMG_DIR, 'Sounds/game_over.wav'))
 
 KEBOARD_ARROWS = pygame.image.load(os.path.join(IMG_DIR, 'Other/keyboard_arrows.png'))
 SPACE_BAR = pygame.image.load(os.path.join(IMG_DIR, 'Other/spacebar.png'))
+GAME_OVER = pygame.image.load(os.path.join(IMG_DIR, 'Other/game_over.jpg'))

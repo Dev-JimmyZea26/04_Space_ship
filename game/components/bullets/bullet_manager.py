@@ -15,6 +15,7 @@ class BulletManager:
                 if game.player.power_up_type != SHIELD_TYPE:
                     mixer.Sound.play(EXPLOSION_SOUND)
                     game.playing = False
+                    game.game_over = True
                     pg.time.delay(1000)
                     game.death_count.update()
                 break

@@ -29,6 +29,7 @@ class Game:
         self.menu = Menu(self.screen)
         self.power_up_manager = PowerUpManager()
         self.stop_time = False
+        self.game_over = False
         
     def execute(self):
         mixer.Sound.play(LOBBY_SOUND)
@@ -108,20 +109,26 @@ class Game:
         self.y_pos_bg += self.game_speed
         
     def show_menu(self):
-        self.menu.reset_screen_color(self.screen)
+        self.menu.reset_screen_color(self.screen, self.game_over)
         half_screen_height = SCREEN_HEIGHT // 2
         half_screen_width = SCREEN_WIDTH // 2
         if self.death_count.count == 0:
-            self.menu.draw(self.screen, 'Welcome to the Space Invaders', half_screen_width, 50)
-            self.menu.draw(self.screen, 'Press any key to start...', half_screen_width, half_screen_height + 30, True)
+            self.menu.draw(self.screen, 'Space Invaders', half_screen_width, 50, size=50, color=(240, 91, 91))
+            self.menu.draw(self.screen, 'Press any key to start...', half_screen_width, half_screen_height - 70, True)
         else:
             self.update_highes_score()
             color = (255, 255, 255)
-            self.menu.draw(self.screen, f'Game Over. Press any key to restart.', y=50 ,palpitating=True)
-            self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 330, color=color)
-            self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 365, color=color)
-            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 395, color=color)
-
+            rect_surface = pg.Surface((400, 200))
+            rect_surface.set_alpha(170)
+            rect_surface.fill((0,0,0))
+            pg.draw.rect(rect_surface, (255, 255, 255), (0, 0, 400, 200), 4)
+            self.screen.blit(rect_surface, (half_screen_width - 200, half_screen_height))
+            self.menu.draw(self.screen, f'Game Over', y=70, size=80, color=(153, 51, 255))
+            self.menu.draw(self.screen, f'Press any key to restart.', y=200 ,palpitating=True)
+            self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 365, color=color)
+            self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 400, color=color)
+            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 430, color=color)
+            
         self.menu.update(self)
         
     def update_highes_score(self):
