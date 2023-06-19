@@ -84,7 +84,7 @@ class Game:
         if self.player.has_power_up:
             time_to_show = round((self.player.power_up_time - pg.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
-                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for: {time_to_show} in seconds', 500, 50)
+                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for: {time_to_show} in seconds', 500, 50, size=23)
             else:
                 self.player.has_power_up = False
                 self.player.power_up_type = DEFAULT_TYPE

@@ -60,6 +60,7 @@ class Spaceship(Sprite):
     def reset(self):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
+        self.set_image()
         
     def set_image(self, size=(30, 70), image=SPACESHIP):
         self.image = image

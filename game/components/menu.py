@@ -24,7 +24,8 @@ class Menu:
         pg.display.update() # actualizar componentes de la pantalla
         self.handle_events_on_menu(game)
         
-    def draw(self, screen, message, x=HALFT_SCREEN_WIDTH, y=HALFT_SCREEN_HEIGHT, palpitating=False, color=(255, 255, 255)):
+    def draw(self, screen, message, x=HALFT_SCREEN_WIDTH, y=HALFT_SCREEN_HEIGHT, palpitating=False, color=(255, 255, 255), size=30):
+        self.font = pg.font.Font(FONT_STYLE, size)
         current_time = pg.time.get_ticks()
         should_draw = not palpitating or (palpitating and current_time % 2000 < 1000)
 

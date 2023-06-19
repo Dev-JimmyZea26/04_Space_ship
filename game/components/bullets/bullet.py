@@ -5,7 +5,7 @@ from game.utils.constants import BULLET, BULLET_ENEMY, SCREEN_HEIGHT
 class Bullet(Sprite):
     X_POS = 80
     Y_POS = 310
-    BULLET_SIZE = pg.transform.scale(BULLET, (10, 35))
+    BULLET_SIZE = pg.transform.scale(BULLET, (15, 40))
     BULLET_ENEMY_SIZE = pg.transform.scale(BULLET_ENEMY, (9, 32))
     BULLETS = {
         'player': BULLET_SIZE,
