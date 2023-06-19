@@ -22,9 +22,9 @@ class Bullet(Sprite):
     def events(self):
         pass
     
-    def update(self, bullets):
+    def update(self, bullets, stop_time = False):
         if self.owner == 'enemy':
-            self.rect.y += self.speed_bullet
+            self.rect.y += self.speed_bullet if not stop_time else 0
             if self.rect.y >= SCREEN_HEIGHT:
                 bullets.remove(self)
         else:

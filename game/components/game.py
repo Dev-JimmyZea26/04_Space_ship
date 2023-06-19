@@ -27,6 +27,7 @@ class Game:
         self.running = False
         self.menu = Menu(self.screen)
         self.power_up_manager = PowerUpManager()
+        self.stop_time = False
         
     def execute(self):
         self.running = True
@@ -88,6 +89,7 @@ class Game:
             else:
                 self.player.has_power_up = False
                 self.player.power_up_type = DEFAULT_TYPE
+                self.stop_time = False
                 self.player.set_image()
         
     def draw_background(self):

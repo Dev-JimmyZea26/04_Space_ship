@@ -47,23 +47,24 @@ class Enemy(Sprite):
             self.index = 0
     
     def update(self, ships, game):
-        self.rect.y += self.speed_y
-        self.shoot(game.bullet_manager)
+        self.rect.y += self.speed_y if not game.stop_time else 0
+        self.shoot(game.bullet_manager, game)
         if self.movement_x == 'left':
-            self.rect.x -= self.speed_x
+            self.rect.x -= self.speed_x if not game.stop_time else 0
             self.change_movement_x()
         else:
-            self.rect.x += self.speed_x
+            self.rect.x += self.speed_x if not game.stop_time else 0
             self.change_movement_x()
             
         if self.rect.y >= SCREEN_HEIGHT:
             ships.remove(self)
 
-    def shoot(self, bullet_manager):
-        current_time = pg.time.get_ticks()
-        if current_time - self.last_shot_time >= self.ENEMY_SHOOT_DELAY:
-            bullet_manager.add_bullet(Bullet(self))
-            self.last_shot_time = current_time
+    def shoot(self, bullet_manager, game):
+        if not game.stop_time:
+            current_time = pg.time.get_ticks()
+            if current_time - self.last_shot_time >= self.ENEMY_SHOOT_DELAY:
+                bullet_manager.add_bullet(Bullet(self))
+                self.last_shot_time = current_time
                 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))

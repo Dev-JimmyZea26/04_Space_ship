@@ -8,7 +8,7 @@ class BulletManager:
         
     def update(self, game):
         for bullet in self.enemy_bullets:
-            bullet.update(self.enemy_bullets)
+            bullet.update(self.enemy_bullets, game.stop_time)
             if bullet.rect.colliderect(game.player.rect.inflate(20, -50)) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
