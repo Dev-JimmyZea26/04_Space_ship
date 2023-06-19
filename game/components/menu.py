@@ -1,5 +1,5 @@
 import pygame as pg
-from game.utils.constants import FONT_STYLE, SCREEN_HEIGHT, SCREEN_WIDTH, BG2
+from game.utils.constants import FONT_STYLE, SCREEN_HEIGHT, SCREEN_WIDTH, BG2, KEBOARD_ARROWS, SPACE_BAR
 
 class Menu:
     HALFT_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
@@ -37,4 +37,12 @@ class Menu:
 
         
     def reset_screen_color(self, screen):
+        moves = "Move with the arrows"
+        keybord_arrows = pg.transform.scale(KEBOARD_ARROWS, (180, 150))
+        shoot = "Shoot with the space bar"
+        space_bar = pg.transform.scale(SPACE_BAR, (180, 50))
         screen.blit(pg.transform.scale(BG2, (SCREEN_WIDTH, SCREEN_HEIGHT)), (0, 0))
+        screen.blit(keybord_arrows, (350, 150))
+        self.draw(screen, moves, 430, 130, size=20)
+        screen.blit(space_bar, (570, 190))
+        self.draw(screen, shoot, 670, 170, size=20)
