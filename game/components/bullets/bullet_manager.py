@@ -1,5 +1,6 @@
 import pygame as pg
-from game.utils.constants import SHIELD_TYPE
+from pygame import mixer
+from game.utils.constants import SHIELD_TYPE, EXPLOSION_SOUND, SHOOT_SOUND, SHOOT_SOUND_ENEMY
 
 class BulletManager:
     def __init__(self):
@@ -12,6 +13,7 @@ class BulletManager:
             if bullet.rect.colliderect(game.player.rect.inflate(-5, -50)) and bullet.owner == 'enemy':
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
+                    mixer.Sound.play(EXPLOSION_SOUND)
                     game.playing = False
                     pg.time.delay(1000)
                     game.death_count.update()
@@ -34,8 +36,10 @@ class BulletManager:
             
     def add_bullet(self, bullet):
         if bullet.owner == 'enemy':
+            mixer.Sound.play(SHOOT_SOUND_ENEMY)
             self.enemy_bullets.append(bullet)
         elif bullet.owner == 'player' and len(self.bullets) < 1:
+            mixer.Sound.play(SHOOT_SOUND)
             self.bullets.append(bullet)
             
     def reset(self):

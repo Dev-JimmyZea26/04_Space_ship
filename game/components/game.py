@@ -1,5 +1,6 @@
 import pygame as pg
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, FONT_STYLE
+from pygame import mixer
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, LOBBY_SOUND
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
@@ -30,6 +31,7 @@ class Game:
         self.stop_time = False
         
     def execute(self):
+        mixer.Sound.play(LOBBY_SOUND)
         self.running = True
         while self.running:
             if not self.playing:
@@ -41,9 +43,12 @@ class Game:
         self.reset()
         self.playing = True
         while self.playing:
+            mixer.Sound.stop(LOBBY_SOUND)
             self.events()
             self.update()
             self.draw()
+        else:
+            mixer.Sound.play(LOBBY_SOUND)
         
     def reset(self):
         self.enemy_manager.reset()
