@@ -17,7 +17,7 @@ class Menu:
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     game.running = False
-                else:
+                elif event.key == pg.K_RETURN:
                     game.run()
         
     def update(self, game):

@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame import mixer
-from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, LOBBY_SOUND
+from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, LOBBY_SOUND, SPACESHIP
 from game.components.spaceship import Spaceship
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.bullets.bullet_manager import BulletManager
@@ -102,7 +102,9 @@ class Game:
         image_height = image.get_height()
         self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg))
         self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
-        
+        for i in range(self.player.life):
+            self.screen.blit(pg.transform.scale(SPACESHIP, (20, 50)), (SCREEN_WIDTH - 40 - (i * 30), SCREEN_HEIGHT - 60))
+          
         if self.y_pos_bg >= SCREEN_HEIGHT:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
@@ -114,7 +116,7 @@ class Game:
         half_screen_width = SCREEN_WIDTH // 2
         if self.death_count.count == 0:
             self.menu.draw(self.screen, 'Space Invaders', half_screen_width, 50, size=50, color=(240, 91, 91))
-            self.menu.draw(self.screen, 'Press any key to start...', half_screen_width, half_screen_height - 70, True)
+            self.menu.draw(self.screen, 'Press enter to start...', half_screen_width, half_screen_height - 70, True)
         else:
             self.update_highes_score()
             color = (255, 255, 255)
@@ -123,8 +125,8 @@ class Game:
             rect_surface.fill((0,0,0))
             pg.draw.rect(rect_surface, (255, 255, 255), (0, 0, 400, 200), 4)
             self.screen.blit(rect_surface, (half_screen_width - 200, half_screen_height))
-            self.menu.draw(self.screen, f'Game Over', y=70, size=80, color=(153, 51, 255))
-            self.menu.draw(self.screen, f'Press any key to restart.', y=200 ,palpitating=True)
+            self.menu.draw(self.screen, f'Game Over', y=70, size=80, color=(0, 153, 153))
+            self.menu.draw(self.screen, f'Press enter to restart.', y=200 ,palpitating=True)
             self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 365, color=color)
             self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 400, color=color)
             self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 430, color=color)

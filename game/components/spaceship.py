@@ -18,6 +18,7 @@ class Spaceship(Sprite):
         self.has_power_up = False
         self.power_up_time = 0
         self.power_up_type = DEFAULT_TYPE
+        self.life = 3
         
     # Events   
     def move_left(self):
@@ -61,6 +62,8 @@ class Spaceship(Sprite):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         self.set_image()
+        if self.life == 0:
+            self.life = 3
         
     def set_image(self, size=(30, 70), image=SPACESHIP):
         self.image = image

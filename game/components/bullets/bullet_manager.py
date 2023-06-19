@@ -1,6 +1,6 @@
 import pygame as pg
 from pygame import mixer
-from game.utils.constants import SHIELD_TYPE, EXPLOSION_SOUND, SHOOT_SOUND, SHOOT_SOUND_ENEMY
+from game.utils.constants import SHIELD_TYPE, EXPLOSION_SOUND, SHOOT_SOUND, SHOOT_SOUND_ENEMY, SHIELD_IMPACT_SOUND
 
 class BulletManager:
     def __init__(self):
@@ -14,10 +14,17 @@ class BulletManager:
                 self.enemy_bullets.remove(bullet)
                 if game.player.power_up_type != SHIELD_TYPE:
                     mixer.Sound.play(EXPLOSION_SOUND)
-                    game.playing = False
-                    game.game_over = True
+                    game.player.life -= 1
                     pg.time.delay(1000)
-                    game.death_count.update()
+                    if game.player.life == 0:
+                        game.playing = False
+                        game.game_over = True
+                        game.death_count.update()
+                    game.player.reset()
+                    game.enemy_manager.reset()
+                    self.reset()
+                else:
+                    mixer.Sound.play(SHIELD_IMPACT_SOUND)
                 break
             
         for bullet in self.bullets:
