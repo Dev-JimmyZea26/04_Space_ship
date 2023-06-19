@@ -33,6 +33,7 @@ class PowerUpManager:
             if game.player.rect.colliderect(power_up.rect):
                 self.power_up_action(game)
                 power_up.start_time = pg.time.get_ticks()
+                game.player.has_power_up = True
                 game.player.power_up_time = power_up.start_time + (self.duration * 1000)
                 self.power_ups.remove(power_up)
                 break
@@ -40,7 +41,7 @@ class PowerUpManager:
     def power_up_action(self, game):
         if self.power_up_index == 1:
             game.player.power_up_type = SHIELD_TYPE
-            game.player.set_image((65, 75), SPACESHIP_SHIELD)
+            game.player.set_image((40, 80), SPACESHIP_SHIELD)
         elif self.power_up_index == 2:
             game.player.power_up_type = STOP_TIME_TYPE
             game.stop_time = True

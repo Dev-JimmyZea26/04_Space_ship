@@ -9,7 +9,7 @@ class Spaceship(Sprite):
     
     def __init__(self):
         self.image = SPACESHIP
-        self.image = pg.transform.scale(self.image, (40, 60))
+        self.image = pg.transform.scale(self.image, (30, 70))
         self.rect = self.image.get_rect()
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
@@ -61,6 +61,6 @@ class Spaceship(Sprite):
         self.rect.x = self.X_POS
         self.rect.y = self.Y_POS
         
-    def set_image(self, size=(40, 60), image=SPACESHIP):
+    def set_image(self, size=(30, 70), image=SPACESHIP):
         self.image = image
         self.image = pg.transform.scale(self.image, size)

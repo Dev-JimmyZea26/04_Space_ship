@@ -81,11 +81,10 @@ class Game:
         pg.display.flip()
     
     def draw_power_up_time(self):
-        self.player.has_power_up = True
         if self.player.has_power_up:
             time_to_show = round((self.player.power_up_time - pg.time.get_ticks()) / 1000, 2)
             if time_to_show >= 0:
-                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for: {time_to_show} in seconds', 500, 50, (255, 0, 0))
+                self.menu.draw(self.screen, f'{self.player.power_up_type.capitalize()} is enabled for: {time_to_show} in seconds', 500, 50)
             else:
                 self.player.has_power_up = False
                 self.player.power_up_type = DEFAULT_TYPE
@@ -108,16 +107,16 @@ class Game:
         half_screen_height = SCREEN_HEIGHT // 2
         half_screen_width = SCREEN_WIDTH // 2
         if self.death_count.count == 0:
-            self.menu.draw(self.screen, 'Press any key to start...')
+            self.menu.draw(self.screen, 'Welcome to the Space Invaders', half_screen_width, 50)
+            self.menu.draw(self.screen, 'Press any key to start...', half_screen_width, half_screen_height + 30, True)
         else:
             self.update_highes_score()
-            self.menu.draw(self.screen, f'Game Over. Press any key to restart.')
-            self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 350)
-            self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 400)
-            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 450)
+            color = (255, 255, 255)
+            self.menu.draw(self.screen, f'Game Over. Press any key to restart.', y=50 ,palpitating=True)
+            self.menu.draw(self.screen, f'Your score: {self.score.count}', half_screen_width, 330, color=color)
+            self.menu.draw(self.screen, f'Highest score: {self.highest_score.count}', half_screen_width, 365, color=color)
+            self.menu.draw(self.screen, f'Total deaths: {self.death_count.count}', half_screen_width, 395, color=color)
 
-        icon = pg.transform.scale(ICON, (100, 100))
-        self.screen.blit(icon, (half_screen_width - 50, half_screen_height - 150))
         self.menu.update(self)
         
     def update_highes_score(self):

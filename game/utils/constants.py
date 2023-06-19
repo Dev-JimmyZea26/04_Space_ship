@@ -16,6 +16,7 @@ SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 STOP_TIME = pygame.image.load(os.path.join(IMG_DIR, 'Other/stop_time.png'))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+BG2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/back.jpg'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
